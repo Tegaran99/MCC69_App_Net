@@ -11,9 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 
-
+//client
 
 namespace MCC69_App
 {
@@ -29,17 +30,8 @@ namespace MCC69_App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
-            
-            services.AddScoped<RoleRepository>();
-            services.AddScoped<UserRoleRepository>();
-            services.AddScoped<UserRepository>();
-            services.AddScoped<JobRepository>();            
-            services.AddScoped<EmployeeRepository>();
-            services.AddScoped<DepartmentRepository>();
-            services.AddScoped<LocationRepository>();
-            services.AddScoped<CountryRepository>();
-            services.AddScoped<RegionRepository>();
+            services.AddHttpContextAccessor();         
+                        
             services.AddControllersWithViews();
             //services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connection")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -65,14 +57,24 @@ namespace MCC69_App
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseStatusCodePages(async context => {
+                var request = context.HttpContext.Request;
+                var response = context.HttpContext.Response;
+                if (response.StatusCode.Equals((int)HttpStatusCode.NotFound))
+                {
+                    response.Redirect("../home/NotFound404");
+                }
+            });
+
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSession();
+            
 
             app.UseEndpoints(endpoints =>
             {
