@@ -15,6 +15,7 @@ namespace Client.Controller
         public async Task<IActionResult> Index()
         {
             Json<Regions> regionList = new Json<Regions>();
+
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync("https://localhost:44390/api/Region"))

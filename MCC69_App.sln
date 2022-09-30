@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "MCC69_App\Client.csproj", "{833D0F76-CC36-4306-857F-5E1F8CBE085A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{231743A8-2D63-460D-B842-E8FC44A4146E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{231743A8-2D63-460D-B842-E8FC44A4146E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{418FF850-2984-485B-8697-04BA80F560FD}"
 	ProjectSection(SolutionItems) = preProject

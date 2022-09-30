@@ -1,4 +1,6 @@
-
+using Client.Context;
+using Client.Repository.Data;
+using MCC69_App.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,9 +11,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Threading.Tasks;
 
 
 //client
@@ -30,18 +31,23 @@ namespace MCC69_App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();         
-                        
             services.AddControllersWithViews();
-            //services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connection")));
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddDistributedMemoryCache();
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
-            });
+            services.AddSession();
+            services.AddHttpContextAccessor();
 
-            /* services.AddDbContext<MyContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("connection")));*/
+            services.AddScoped<CountryRepository>();
+
+
+
+            //services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connection")));
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddDistributedMemoryCache();
+            /*services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
+            });*/
+
+            services.AddDbContext<MyContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("connection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,7 +78,7 @@ namespace MCC69_App
                 }
             });
 
-            app.UseAuthentication();
+            
             app.UseAuthorization();
             
 
